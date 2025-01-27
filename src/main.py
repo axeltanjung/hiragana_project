@@ -1,50 +1,13 @@
 import streamlit as st
+import json
+import flashcards as flashcards
+import quizzes as quizzes
+import interactive_chart as interactive_chart
+import pronunciation_guides as pronunciation_guides
 
-# /D:/project/hiragana_project/src/main.py
-
-# Dictionary mapping English alphabet to Hiragana
-alphabet_to_hiragana = {
-    # Additional single characters
-    'ka': 'か', 'ki': 'き', 'ku': 'く', 'ke': 'け', 'ko': 'こ',
-    'sa': 'さ', 'shi': 'し', 'su': 'す', 'se': 'せ', 'so': 'そ',
-    'ta': 'た', 'chi': 'ち', 'tsu': 'つ', 'te': 'て', 'to': 'と',
-    'na': 'な', 'ni': 'に', 'nu': 'ぬ', 'ne': 'ね', 'no': 'の',
-    'ha': 'は', 'hi': 'ひ', 'fu': 'ふ', 'he': 'へ', 'ho': 'ほ',
-    'ma': 'ま', 'mi': 'み', 'mu': 'む', 'me': 'め', 'mo': 'も',
-    'ya': 'や', 'yu': 'ゆ', 'yo': 'よ',
-    'ra': 'ら', 'ri': 'り', 'ru': 'る', 're': 'れ', 'ro': 'ろ',
-    'wa': 'わ', 'wo': 'を',
-    'n': 'ん',
-
-    # Diacritical marks (Dakuten and Handakuten)
-    'ga': 'が', 'gi': 'ぎ', 'gu': 'ぐ', 'ge': 'げ', 'go': 'ご',
-    'za': 'ざ', 'ji': 'じ', 'zu': 'ず', 'ze': 'ぜ', 'zo': 'ぞ',
-    'da': 'だ', 'ji': 'ぢ', 'zu': 'づ', 'de': 'で', 'do': 'ど',
-    'ba': 'ば', 'bi': 'び', 'bu': 'ぶ', 'be': 'べ', 'bo': 'ぼ',
-    'pa': 'ぱ', 'pi': 'ぴ', 'pu': 'ぷ', 'pe': 'ぺ', 'po': 'ぽ',
-
-    # Modified sounds (Yōon - combinations with 'ya', 'yu', 'yo')
-    'kya': 'きゃ', 'kyu': 'きゅ', 'kyo': 'きょ',
-    'sha': 'しゃ', 'shu': 'しゅ', 'sho': 'しょ',
-    'cha': 'ちゃ', 'chu': 'ちゅ', 'cho': 'ちょ',
-    'nya': 'にゃ', 'nyu': 'にゅ', 'nyo': 'にょ',
-    'hya': 'ひゃ', 'hyu': 'ひゅ', 'hyo': 'ひょ',
-    'mya': 'みゃ', 'myu': 'みゅ', 'myo': 'みょ',
-    'rya': 'りゃ', 'ryu': 'りゅ', 'ryo': 'りょ',
-    'gya': 'ぎゃ', 'gyu': 'ぎゅ', 'gyo': 'ぎょ',
-    'ja': 'じゃ', 'ju': 'じゅ', 'jo': 'じょ',
-    'bya': 'びゃ', 'byu': 'びゅ', 'byo': 'びょ',
-    'pya': 'ぴゃ', 'pyu': 'ぴゅ', 'pyo': 'ぴょ',
-
-    # Other Yōon Combinations (Wago/Loanwords)
-    'wa': 'わ', 'wi': 'うぃ', 'we': 'うぇ', 'wo': 'を',
-    'vu': 'ゔ', 've': 'ゔぇ', 'vi': 'ゔぃ',
-    'si': 'し', 'ti': 'ち', 'di': 'ぢ',
-    'chi': 'ち', 'tsu': 'つ', 'tu': 'つ',
-
-    'a': 'あ', 'e': 'え', 'i': 'い', 'o': 'お', 'u': 'う'
-}
-
+# Load the dictionary mapping English alphabet to Hiragana from a JSON file
+with open('alphabet_to_hiragana.json', 'r', encoding='utf-8') as f:
+    alphabet_to_hiragana = json.load(f)
 
 def convert_to_hiragana(text):
     hiragana_text = ""
@@ -75,3 +38,16 @@ if __name__ == "__main__":
         if input_text:
             hiragana_text = convert_to_hiragana(input_text)
             st.write("Hiragana: ", hiragana_text)
+
+    st.sidebar.title("Features")
+    feature = st.sidebar.selectbox("Select a feature", ["Interactive Hiragana Chart", "Flashcards", "Quizzes", "Pronunciation Guides"])
+
+    if feature == "Interactive Hiragana Chart":
+        interactive_chart.interactive_chart()
+    elif feature == "Flashcards":
+        flashcards.flashcards()
+    elif feature == "Quizzes":
+        quizzes.quizzes()
+    elif feature == "Pronunciation Guides":
+        pass
+        # pronunciation_guides.pronunciation_guides()
