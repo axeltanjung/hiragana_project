@@ -1,12 +1,15 @@
 import streamlit as st
 import json
-import flashcards as flashcards
-import quizzes as quizzes
-import interactive_chart as interactive_chart
-import pronunciation_guides as pronunciation_guides
+import os
+import dictionary as dictionary
+import kanji as kanji
+
+# Get the directory of the current file
+current_dir = os.path.dirname(os.path.abspath(__file__))
+json_path = os.path.join(current_dir, 'alphabet_to_hiragana.json')
 
 # Load the dictionary mapping English alphabet to Hiragana from a JSON file
-with open('alphabet_to_hiragana.json', 'r', encoding='utf-8') as f:
+with open(json_path, 'r', encoding='utf-8') as f:
     alphabet_to_hiragana = json.load(f)
 
 def convert_to_hiragana(text):
@@ -31,23 +34,15 @@ def convert_to_hiragana(text):
     return hiragana_text
 
 if __name__ == "__main__":
-    st.title("English to Hiragana Converter")
-
-    input_text = st.text_input("Enter text to convert to Hiragana:")
-    if st.button("Convert"):
-        if input_text:
-            hiragana_text = convert_to_hiragana(input_text)
-            st.write("Hiragana: ", hiragana_text)
+    st.title("Japanese Learning Tools")
 
     st.sidebar.title("Features")
-    feature = st.sidebar.selectbox("Select a feature", ["Interactive Hiragana Chart", "Flashcards", "Quizzes", "Pronunciation Guides"])
+    feature = st.sidebar.selectbox("Select a feature", [
+        "Dictionary",
+        "Kanji Learning"
+    ])
 
-    if feature == "Interactive Hiragana Chart":
-        interactive_chart.interactive_chart()
-    elif feature == "Flashcards":
-        flashcards.flashcards()
-    elif feature == "Quizzes":
-        quizzes.quizzes()
-    elif feature == "Pronunciation Guides":
-        pass
-        # pronunciation_guides.pronunciation_guides()
+    if feature == "Dictionary":
+        dictionary.dictionary()
+    elif feature == "Kanji Learning":
+        kanji.kanji()
